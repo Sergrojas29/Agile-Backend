@@ -1,8 +1,10 @@
-from sqlalchemy import create_engine, String
-from sqlalchemy.orm import Mapped, mapped_column, Session , relationship, Boolean
-from app.base import Base
-from datetime import datetime
+import sqlalchemy as sa
+from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey 
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
+from app.database import Base
 import uuid
+from datetime import datetime
+
 
 class User(Base):
     __tablename__ = "users"
@@ -16,7 +18,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(100), unique=True , nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     
-    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=datetime.now())
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     
     #bidirectional Relationship to MANY Tasks
     assigned_tasks: Mapped[list["Task"]] =relationship(back_populates="assigned_to")

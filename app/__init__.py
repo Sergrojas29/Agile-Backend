@@ -1,11 +1,14 @@
 from flask import Flask
 
+
+
 from config import config
 
 
 
 from app.routes.user import user_bp
 from app.routes.main import main
+
 
 def create_app(config_name = 'default'):
     app = Flask(__name__)
@@ -16,7 +19,7 @@ def create_app(config_name = 'default'):
     app.register_blueprint(main)
     
     app.config.from_object(config[config_name])
-    
+
     
     
     return app

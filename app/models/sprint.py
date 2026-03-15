@@ -1,12 +1,10 @@
 import sqlalchemy as sa
 from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
-from app.base import Base
+from app.database import Base
 import uuid
 from datetime import datetime
 
-# Class Import
-from task import Task
     
 class Sprint(Base):
     __tablename__ = "sprints"
