@@ -6,7 +6,7 @@ from config import config
 
 
 
-from app.routes.userRoute import user_bp
+from app.routes.user import user_bp
 from app.routes.main import main
 
 
