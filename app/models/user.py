@@ -11,7 +11,7 @@ class User(Base):
     
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     name: Mapped[str] = mapped_column(String(50))
-    role: Mapped[str] = mapped_column(String(50))
+    role: Mapped[str] = mapped_column(String(50), nullable=True)
     is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
     
     username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
