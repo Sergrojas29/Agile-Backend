@@ -1,5 +1,5 @@
-from app.database import engine, Base
-
+from app.database import engine
+from app.models.base import Base
 # put this on render
 # pip install -r requirements.txt && python init_db.py
 

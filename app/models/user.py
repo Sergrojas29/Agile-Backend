@@ -1,7 +1,7 @@
 import sqlalchemy as sa
 from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
-from app.database import Base
+from app.models.base import Base
 import uuid
 from datetime import datetime
 
