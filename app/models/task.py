@@ -1,5 +1,5 @@
 import sqlalchemy as sa
-from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey 
+from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey , Date
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
 from app.models.base import Base
 from datetime import datetime
@@ -14,8 +14,8 @@ class Task(Base):
     
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     
-    start_at: Mapped[datetime] = mapped_column(DateTime, nullable= False, server_default=func.now())
-    due_at: Mapped[datetime] = mapped_column(DateTime, nullable= False)
+    start_at: Mapped[Date] = mapped_column(Date, nullable= False, server_default=func.now())
+    due_at: Mapped[Date] = mapped_column(Date, nullable= False)
     value: Mapped[int] = mapped_column(Integer, nullable=False)
     
     #create Relationship to ONE user

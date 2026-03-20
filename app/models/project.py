@@ -1,5 +1,5 @@
 import sqlalchemy as sa
-from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey 
+from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey, Date
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
 from app.models.base import Base
 import uuid
@@ -14,8 +14,8 @@ class Project(Base):
     
     description: Mapped[str] = mapped_column(String(500), nullable= True)
     
-    start_at: Mapped[datetime] = mapped_column(DateTime, nullable= False, server_default=func.now())
-    end_at: Mapped[datetime] = mapped_column(DateTime, nullable= False)
+    start_at: Mapped[Date] = mapped_column(Date, nullable= False, server_default=func.now())
+    end_at: Mapped[Date] = mapped_column(Date, nullable= False)
     
     
     

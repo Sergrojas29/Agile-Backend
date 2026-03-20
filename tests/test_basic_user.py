@@ -70,10 +70,10 @@ class TestAppBasic(unittest.TestCase):
     def test_many_user(self)-> None:
         many_users: list[User] = [ 
                     User(name="Sergio Rojas", role="Is this need?", is_admin = True, username="goodUsername", email="agood@gmail.com", password="Something"),
-                    User(name="Carolina ", is_admin=True, username="AnotherUsername", email="aGood@gmail.com", password="passsssword"),
-                    User(name="Mike ", is_admin=False, username="ussssername", email="anotherGood1@gmail.com", password="pass11sssword"),
-                    User(name="Andrew ", is_admin=False, username="stherUsername", email="anotherGood45@gmail.com", password="pas$$$$sword"),
-                    User(name="Eric ", is_admin=True, username="usereNAme", email="AAanotherGood@gmail.com", password="p@aa$$sssword"),
+                    User(name="Carolina", is_admin=True, username="CarolinaUsername", email="aGood@gmail.com", password="passsssword"),
+                    User(name="Mike", is_admin=False, username="MikeUssername", email="anotherGood1@gmail.com", password="pass11sssword"),
+                    User(name="Andrew", is_admin=False, username="stherUsername", email="anotherGood45@gmail.com", password="pas$$$$sword"),
+                    User(name="Eric", is_admin=True, username="usereNAme", email="AAanotherGood@gmail.com", password="p@aa$$sssword"),
                 ]
  
         with SessionLocal() as session:
