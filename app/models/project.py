@@ -18,11 +18,15 @@ class Project(Base):
     end_at: Mapped[Date] = mapped_column(Date, nullable= False)
     
     
-    
+    #!TODO: assign project to many users
     #create Relationship to MANY users
     # team: Mapped[list["User"]] = mapped_column()
     
     #create Relationship to ONE user
     owner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
     owner: Mapped["User"] = relationship(back_populates="assigned_projects")
+    
+    
+    #create Relationshio to MANY Sprints
+    assigned_sprints: Mapped[list["Sprint"]] = relationship(back_populates="project")
     

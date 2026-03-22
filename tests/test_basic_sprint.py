@@ -7,6 +7,7 @@ from datetime import date
 from app.database import SessionLocal
 from app.models.task import Task
 from app.models.user import User
+from app.models.sprint import Sprint
   
 #!  python -m unittest discover
 class TestAppBasic(unittest.TestCase):
@@ -30,72 +31,52 @@ class TestAppBasic(unittest.TestCase):
     def tearDown(self) -> None:
         teardown_database()
     
-    # Test Zero - Bad tast input
-    def test_zero_task(self)->None:
-        pass
+    # Test ONE - Sprint input
+    def test_sprint(self)->None:
+        one_sprint = Sprint(
+            label = "Test sprint",
+            start_at = date(2016, 3, 18),
+            end_at = date(2016, 3, 18)
+        )
             
+        with SessionLocal() as session:
+            session.add(one_sprint)
+            
+            #add test and check
+            session.commit()
     
     
     
-    
-    # # ONE User    
-    # def test_one_user(self)->None:
-        
-    #     with SessionLocal() as session:
-    #         new_user = User(
-    #             name= "Sergio Rojas", 
-    #             role= "Is this need?",
-    #             # isadmin -> default false
-    #             username= "goodUsername", 
-    #             email = "agood@gmail.com",#need email validation
-    #             password= "Something"
-    #         )
-    #         session.add(new_user)
-            
-    #         session.commit()
-            
-    #         user_db: User | None = session.query(User).filter_by(username= new_user.username).first()
-            
-    #         #Exists
-    #         self.assertIsNotNone(user_db)
-    #         self.assertIsNotNone(user_db.id)
-            
-    #         #Matchs input
-    #         self.assertEqual(user_db.email, new_user.email)
-    #         self.assertEqual(user_db.name, new_user.name)
-
-
-
     # #Many Users
-    # def test_many_user(self)-> None:
-    #     many_users: list[User] = [ 
-    #                 User(name="Sergio Rojas", role="Is this need?", is_admin = True, username="goodUsername", email="agood@gmail.com", password="Something"),
-    #                 User(name="Carolina ", is_admin=True, username="AnotherUsername", email="aGood@gmail.com", password="passsssword"),
-    #                 User(name="Mike ", is_admin=False, username="ussssername", email="anotherGood1@gmail.com", password="pass11sssword"),
-    #                 User(name="Andrew ", is_admin=False, username="stherUsername", email="anotherGood45@gmail.com", password="pas$$$$sword"),
-    #                 User(name="Eric ", is_admin=True, username="usereNAme", email="AAanotherGood@gmail.com", password="p@aa$$sssword"),
-    #             ]
+    def test_many_sprint(self)-> None:
+        many_sprints: list[Sprint] = [ 
+                   Sprint( label= "test 1" , start_at= date(2026, 3, 10), end_at= date(2026, 3, 24)),
+                   Sprint( label= "test 2" , start_at= date(2026, 3, 25), end_at= date(2026, 4, 9)),
+                   Sprint( label= "test 3" , start_at= date(2026, 4, 10), end_at= date(2026, 4, 19)),
+                   Sprint( label= "test 4" , start_at= date(2026, 4, 20), end_at= date(2026, 5, 19)),
+                   Sprint( label= "test 5" , start_at= date(2026, 5, 20), end_at= date(2026, 5, 29)),
+                ]
  
-    #     with SessionLocal() as session:
+        with SessionLocal() as session:
             
-    #         session.add_all(many_users)
-    #         session.commit()
+            session.add_all(many_sprints)
+            session.commit()
             
-    #         db_manu_users: list[User] = session.query(User).all()
+            db_manu_users: list[User] = session.query(User).all()
             
             
-    #         #User id isn't None
-    #         for user in db_manu_users:
-    #             self.assertIsNotNone(user.id)
+            #User id isn't None
+            for user in db_manu_users:
+                self.assertIsNotNone(user.id)
             
-    #         #Correct amount of user added
-    #         self.assertEqual(len(db_manu_users), len(many_users))
+            #Correct amount of user added
+            self.assertEqual(len(db_manu_users), len(many_sprints))
             
-    #         #Correct amount of Admins
-    #         db_all_admin: list[User] = session.query(User).filter(User.is_admin == True).all()
+            #Correct amount of Admins
+            db_all_admin: list[User] = session.query(User).filter(User.is_admin == True).all()
             
-    #         many_users_admins = [ user  for user in many_users if user.is_admin == True]
+            many_users_admins = [ user  for user in many_sprints if user.is_admin == True]
             
-    #         self.assertEqual(len(db_all_admin), len(many_users_admins))
+            self.assertEqual(len(db_all_admin), len(many_users_admins))
                 
                 

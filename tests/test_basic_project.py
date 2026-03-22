@@ -51,7 +51,6 @@ class TestAppBasic(unittest.TestCase):
             
             db_project = session.query(Project).filter_by(name = one_Project.name).first()
             
-            assert
             
             session.commit()
             

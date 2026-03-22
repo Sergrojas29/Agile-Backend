@@ -1,5 +1,5 @@
 import sqlalchemy as sa
-from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey 
+from sqlalchemy import create_engine, String, Text, Boolean,Integer, DateTime, func, ForeignKey, Date
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
 from app.models.base import Base
 import uuid
@@ -11,8 +11,12 @@ class Sprint(Base):
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     
     label: Mapped[str] = mapped_column(String, nullable = False)
-    start_at: Mapped[datetime] = mapped_column(DateTime, nullable= False, server_default=func.now())
-    end_at: Mapped[datetime] = mapped_column(DateTime, nullable= False)
+    start_at: Mapped[Date] = mapped_column(Date, nullable= False, server_default=func.now())
+    end_at: Mapped[Date] = mapped_column(Date, nullable= False)
+    
+    #create Relationship to ONE project
+    project_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("projects.id"))
+    project: Mapped["Project"] = relationship(back_populates="assigned_sprints")
     
     #create Sprint Relationship to MANY Task
     tasks: Mapped[list["Task"]] = relationship(back_populates="assigned_sprint")
