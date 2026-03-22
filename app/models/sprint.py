@@ -10,7 +10,7 @@ class Sprint(Base):
     __tablename__ = "sprints"
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     
-    label: Mapped[str] = mapped_column(String, nullable = False)
+    title: Mapped[str] = mapped_column(String, nullable = False)
     start_at: Mapped[Date] = mapped_column(Date, nullable= False, server_default=func.now())
     end_at: Mapped[Date] = mapped_column(Date, nullable= False)
     

@@ -10,7 +10,7 @@ from datetime import datetime
 class Project(Base):
     __tablename__ = "projects"
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    name: Mapped[str] = mapped_column(String(50), unique=False, nullable=False)
+    title: Mapped[str] = mapped_column(String(50), unique=False, nullable=False)
     
     description: Mapped[str] = mapped_column(String(500), nullable= True)
     

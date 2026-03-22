@@ -41,7 +41,7 @@ def post_project():
     try: 
         data = request.json 
         project = Project(
-           name = data["name"],
+           title = data["name"],
            description = data.get("description"),
            end_at = data["end_at"] 
         )

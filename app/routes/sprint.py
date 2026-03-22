@@ -48,7 +48,7 @@ def post_sprint():
         data = request.json
 
         sprint = Sprint(
-            label = data["label"],
+            title = data["title"],
             end_at = data["end_at"]
         )
         db.add(sprint)
@@ -65,7 +65,7 @@ def update_sprint(sprint_id):
         data = request.json
         sprint = db.query(Sprint).get(sprint_id)
 
-        sprint.label = data.get("label", sprint.label)
+        sprint.title = data.get("title", sprint.title)
         sprint.end_at = data.get("end_at", sprint.end_at)
 
         db.commit()

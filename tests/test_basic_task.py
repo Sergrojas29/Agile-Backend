@@ -7,112 +7,98 @@ from datetime import date
 from app.database import SessionLocal
 from app.models.task import Task
 from app.models.user import User
+from app.models.project import Project
+from app.models.sprint import Sprint
   
 #!  python -m unittest discover
 class TestAppBasic(unittest.TestCase):
     pass
     
-    # def setUp(self) -> None:
-    #     setup_database()
-    #     many_users: list[User] = [ 
-    #                 User(name="Sergio", is_admin = True, username="SergioUsername", email="agood@gmail.com", password="Something"),
-    #                 User(name="Carolina", is_admin=True, username="CarolinaUsername", email="aGood@gmail.com", password="passsssword"),
-    #                 User(name="Mike", is_admin=False, username="MikeUsername", email="anotherGood1@gmail.com", password="pass11sssword"),
-    #                 User(name="Andrew", is_admin=False, username="AndrewUsername", email="anotherGood45@gmail.com", password="pas$$$$sword"),
-    #                 User(name="Eric", is_admin=True, username="EricUsername", email="AAanotherGood@gmail.com", password="p@aa$$sssword"),
-    #             ]
+    def setUp(self) -> None:
+        setup_database()
  
-    #     with SessionLocal() as session:
+        with SessionLocal() as session:
             
-    #         session.add_all(many_users)
-    #         session.commit()
+            one_user = User(
+                name="Sergio",
+                is_admin=True,
+                username="SergioUsername",
+                email="agood@gmail.com",
+                password="Something"
+            )
+            session.add(one_user)
+            session.flush()
 
-    # def tearDown(self) -> None:
-    #     teardown_database()
-    
-    # # Test Zero - Bad tast input
-    # def test_zero_task(self)->None:
-    #     with SessionLocal() as session:
+            #project in memory
+            one_project = Project(
+                title="One Working Project",
+                description="This is a test project",
+                start_at=date(2026, 3, 20),
+                end_at=date(2026, 3, 25),
+                owner_id=one_user.id
+            )
+            session.add(one_project)
+            session.flush()
             
-    #         db_user: User | None = session.query(User).filter_by(username= "SergioUsername").first()                
+            one_sprint = Sprint(
+            title = "Test sprint",
+            start_at = date(2016, 3, 18),
+            end_at = date(2016, 3, 25),
+            project_id= one_project.id
+            )
+            
+            session.add(one_sprint)
+            session.commit()
             
             
-    #         bad_Task = Task(
-    #             title = "Bad Task",
-    #             description = "This is a invalid task",
-    #             due_at = date(2026, 3 , 20)
-    #             value = 1
-    #             user_id = db_user.id,
-    #             sprint_id = uuid.uuid4
-    #         )
-            
-    #         session.add(bad_Task)
-            
-    #         with self.assertRaises(IntegrityError):
-    #             session.commit()
-            
-    
-    
-    
-    
-    # # ONE User    
-    # def test_one_user(self)->None:
+            # Save IDs for use in tests
+            self.user_id = one_user.id
+            self.project_id = one_project.id
+            self.sprint_id = one_sprint.id
+
+    def tearDown(self) -> None:
+        teardown_database()
         
-    #     with SessionLocal() as session:
-    #         new_user = User(
-    #             name= "Sergio Rojas", 
-    #             role= "Is this need?",
-    #             # isadmin -> default false
-    #             username= "goodUsername", 
-    #             email = "agood@gmail.com",#need email validation
-    #             password= "Something"
-    #         )
-    #         session.add(new_user)
+    
+    
+    
+    # ONE Task    
+    def test_one_task(self)->None:
+        
+        with SessionLocal() as session:
+            one_task = Task(
+                title = "One Task",
+                description = "This is the description of ONE task",
+                start_at= date(2016, 3, 25),
+                due_at= date(2016, 4, 24),
+                value= 2,
+                user_id= self.user_id,
+                sprint_id= self.sprint_id
+            )
+            session.add(one_task)
             
-    #         session.commit()
+            session.commit()
             
-    #         user_db: User | None = session.query(User).filter_by(username= new_user.username).first()
-            
-    #         #Exists
-    #         self.assertIsNotNone(user_db)
-    #         self.assertIsNotNone(user_db.id)
-            
-    #         #Matchs input
-    #         self.assertEqual(user_db.email, new_user.email)
-    #         self.assertEqual(user_db.name, new_user.name)
+
 
 
 
     # #Many Users
     # def test_many_user(self)-> None:
-    #     many_users: list[User] = [ 
-    #                 User(name="Sergio Rojas", role="Is this need?", is_admin = True, username="goodUsername", email="agood@gmail.com", password="Something"),
-    #                 User(name="Carolina ", is_admin=True, username="AnotherUsername", email="aGood@gmail.com", password="passsssword"),
-    #                 User(name="Mike ", is_admin=False, username="ussssername", email="anotherGood1@gmail.com", password="pass11sssword"),
-    #                 User(name="Andrew ", is_admin=False, username="stherUsername", email="anotherGood45@gmail.com", password="pas$$$$sword"),
-    #                 User(name="Eric ", is_admin=True, username="usereNAme", email="AAanotherGood@gmail.com", password="p@aa$$sssword"),
-    #             ]
+        many_task: list[Task] = [ 
+                    Task(title= "task 1", description= "A good task description", start_at= date(2026, 4, 29), due_at= date(2026,5,20), value= 2, user_id = self.user_id, sprint_id= self.sprint_id),
+                    Task(title= "task 1", description= "A good task description", start_at= date(2026, 4, 29), due_at= date(2026,5,20), value= 2, user_id = self.user_id, sprint_id= self.sprint_id),
+                    Task(title= "task 1", description= "A good task description", start_at= date(2026, 4, 29), due_at= date(2026,5,20), value= 2, user_id = self.user_id, sprint_id= self.sprint_id),
+                    Task(title= "task 1", description= "A good task description", start_at= date(2026, 4, 29), due_at= date(2026,5,20), value= 2, user_id = self.user_id, sprint_id= self.sprint_id),
+                    Task(title= "task 1", description= "A good task description", start_at= date(2026, 4, 29), due_at= date(2026,5,20), value= 2, user_id = self.user_id, sprint_id= self.sprint_id),
+                ]
  
-    #     with SessionLocal() as session:
+        with SessionLocal() as session:
             
-    #         session.add_all(many_users)
-    #         session.commit()
-            
-    #         db_manu_users: list[User] = session.query(User).all()
+            session.add_all(many_task)
+            session.commit()
             
             
-    #         #User id isn't None
-    #         for user in db_manu_users:
-    #             self.assertIsNotNone(user.id)
-            
-    #         #Correct amount of user added
-    #         self.assertEqual(len(db_manu_users), len(many_users))
-            
-    #         #Correct amount of Admins
-    #         db_all_admin: list[User] = session.query(User).filter(User.is_admin == True).all()
-            
-    #         many_users_admins = [ user  for user in many_users if user.is_admin == True]
-            
-    #         self.assertEqual(len(db_all_admin), len(many_users_admins))
+
                 
                 
