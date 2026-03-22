@@ -1,3 +1,4 @@
 flask
 gunicorn
 SQLAlchemy
+psycopg2-binary
