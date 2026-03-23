@@ -24,7 +24,6 @@ class TestAppBasic(unittest.TestCase):
             
             bad_user = User(
                 name= "Sergio Rojas", 
-                role= "Is this need?",
                 # isadmin -> default false
                 username= "goodUsername", 
                 # missing email
@@ -44,7 +43,6 @@ class TestAppBasic(unittest.TestCase):
         with SessionLocal() as session:
             new_user = User(
                 name= "Sergio Rojas", 
-                role= "Is this need?",
                 # isadmin -> default false
                 username= "goodUsername", 
                 email = "agood@gmail.com",#need email validation
@@ -69,7 +67,7 @@ class TestAppBasic(unittest.TestCase):
     #Many Users
     def test_many_user(self)-> None:
         many_users: list[User] = [ 
-                    User(name="Sergio Rojas", role="Is this need?", is_admin = True, username="goodUsername", email="agood@gmail.com", password="Something"),
+                    User(name="Sergio", is_admin = True, username="goodUsername", email="agood@gmail.com", password="Something"),
                     User(name="Carolina", is_admin=True, username="CarolinaUsername", email="aGood@gmail.com", password="passsssword"),
                     User(name="Mike", is_admin=False, username="MikeUssername", email="anotherGood1@gmail.com", password="pass11sssword"),
                     User(name="Andrew", is_admin=False, username="stherUsername", email="anotherGood45@gmail.com", password="pas$$$$sword"),

@@ -15,12 +15,15 @@ class TestAppBasic(unittest.TestCase):
     
     def setUp(self) -> None:
         setup_database()
-        one_user: User = User(name="Sergio", is_admin = True, username="SergioUsername", email="agood@gmail.com", password="Something")
+        one_user: User = User(name="Sergio", is_admin = True, username="SergProjectUsername", email="agood@gmail.com", password="Something")
                 
  
         with SessionLocal() as session:
             
             session.add(one_user)
+            session.flush()
+            
+            self.db_user_id = one_user.id
             session.commit()
 
     def tearDown(self) -> None:
@@ -29,17 +32,14 @@ class TestAppBasic(unittest.TestCase):
     # Test One Project
     def test_one_project(self)->None:
         with SessionLocal() as session:
-            
-            #GET User for testing Owner
-            db_user: User | None = session.query(User).filter_by(username= "SergioUsername").first()                
-            
-            
+          
+                        
             one_Project = Project(
                 title = "One working Project",
                 description = "This is a test project",
                 start_at = date(2026, 3 , 20), #defualt to now()
                 end_at = date(2026, 3 , 25),
-                owner_id = db_user.id
+                owner_id = self.db_user_id
             )
             
             session.add(one_Project)
@@ -57,7 +57,7 @@ class TestAppBasic(unittest.TestCase):
             self.assertEqual(db_project.description, "This is a test project")
             self.assertEqual(db_project.start_at, date(2026, 3, 20))
             self.assertEqual(db_project.end_at, date(2026, 3, 25))
-            self.assertEqual(db_project.owner_id, db_user.id)
+            self.assertEqual(db_project.owner_id, self.db_user_id)
             
             session.commit()
 
@@ -66,13 +66,10 @@ class TestAppBasic(unittest.TestCase):
     def test_many_projects(self)-> None:
         with SessionLocal() as session:
             
-            #GET User for testing Owner
-            db_user: User | None = session.query(User).filter_by(username= "SergioUsername").first()         
-            
             many_projects: list[Project] = [ 
-                        Project(title = "One working Project",description = "This is a test project1",start_at = date(2026, 3 , 20), end_at = date(2026, 3 , 25),owner_id = db_user.id),
-                        Project(title = "Two working Project",description = "This is a test project2",start_at = date(2026, 3 , 20), end_at = date(2026, 3 , 25),owner_id = db_user.id),
-                        Project(title = "Three working Project",description = "This is a test project3",start_at = date(2026, 3 , 20), end_at = date(2026, 3 , 25),owner_id = db_user.id),
+                        Project(title = "One working Project",description = "This is a test project1",start_at = date(2026, 3 , 20), end_at = date(2026, 3 , 25),owner_id = self.db_user_id),
+                        Project(title = "Two working Project",description = "This is a test project2",start_at = date(2026, 3 , 20), end_at = date(2026, 3 , 25),owner_id = self.db_user_id),
+                        Project(title = "Three working Project",description = "This is a test project3",start_at = date(2026, 3 , 20), end_at = date(2026, 3 , 25),owner_id = self.db_user_id),
                     ]
             
             #ADD to Database
