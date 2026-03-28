@@ -4,6 +4,7 @@ from init_db import setup_database, teardown_database
 from sqlalchemy.exc import IntegrityError
 
 
+
 from app.database import SessionLocal
 from app.models.user import User
 
