@@ -8,6 +8,7 @@ from config import config
 
 from app.routes.user import user_bp
 from app.routes.main import main
+from app.routes.project import project_bp
 
 
 def create_app(config_name = 'default'):
@@ -17,6 +18,7 @@ def create_app(config_name = 'default'):
     # REGISTER BLUEPRINTS 
     app.register_blueprint(user_bp)
     app.register_blueprint(main)
+    app.register_blueprint(project_bp)
     
     app.config.from_object(config[config_name])
 

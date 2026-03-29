@@ -40,6 +40,9 @@ def post_project():
     db = SessionLocal()
     try: 
         data = request.json 
+        if not data or "name" not in data or "end_at" not in data:
+            return jsonify({"error": "name and end_at are required"}), 400
+
         project = Project(
            title = data["name"],
            description = data.get("description"),
