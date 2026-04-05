@@ -10,7 +10,7 @@ class TestProjectRoutes(unittest.TestCase):
         self.app = create_app('testing')
         self.app.config["TESTING"] = True
         self.client = self.app.test_client()
-        self.db = SessionLocal()  # add this
+        self.db = SessionLocal()  
 
     def tearDown(self):
         self.db.close()
