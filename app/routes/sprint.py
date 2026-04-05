@@ -23,7 +23,7 @@ def get_sprints():
         db.close()
 
 #get a sprint 
-@sprint_bp.route("/sprints/<uuid:sprint_id", methods=["GET"])
+@sprint_bp.route("/sprints/<uuid:sprint_id>", methods=["GET"])
 def get_sprint(sprint_id):
     db = SessionLocal() 
     try: 

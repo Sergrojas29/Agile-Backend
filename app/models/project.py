@@ -28,5 +28,7 @@ class Project(Base):
     
     
     #create Relationshio to MANY Sprints
-    assigned_sprints: Mapped[list["Sprint"]] = relationship(back_populates="project")
+    assigned_sprints: Mapped[list["Sprint"]] = relationship(back_populates="project",
+                                                            cascade="all, delete-orphan"
+                                                            )
     

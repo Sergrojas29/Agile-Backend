@@ -30,7 +30,7 @@ def get_project(project_id):
 
         result = project.to_dict()
 
-        return jsonify(result)
+        return jsonify(result),200
     finally:
         db.close()
 
@@ -40,13 +40,14 @@ def post_project():
     db = SessionLocal()
     try: 
         data = request.json 
-        if not data or "name" not in data or "end_at" not in data:
-            return jsonify({"error": "name and end_at are required"}), 400
+        if not data or "title" not in data or "end_at" not in data:
+            return jsonify({"error": "title and end_at are required"}), 400
 
         project = Project(
-           title = data["name"],
+           title = data["title"],
            description = data.get("description"),
-           end_at = data["end_at"] 
+           end_at = data["end_at"],
+           owner_id = data["owner_id"]
         )
 
         db.add(project)
@@ -69,7 +70,7 @@ def update_project(project_id):
         if not project: 
             return jsonify({"error": "the project is not found"}),404
 
-        project.name = data.get("name", project.name)
+        project.title = data.get("title", project.title)
         project.description = data.get("description", project.description)
         project.end_at = data.get("end_at", project.end_at)
 
