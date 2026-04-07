@@ -35,5 +35,7 @@ class User(Base):
             "username": self.username,
             "email": self.email,
             #no password
-            "created_at": self.created_at.isoformat() if self.created_at else None
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "assigned_projects": [project.to_dict() for project in self.assigned_projects] if self.assigned_projects else [],
+            "assigned_tasks": [task.to_dict() for task in self.assigned_tasks] if self.assigned_tasks else [],
         }
