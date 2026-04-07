@@ -23,3 +23,13 @@ class Sprint(Base):
                                                             cascade="all, delete-orphan"
                                                             )
     
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "title": self.title,
+            "start_at": self.start_at if self.start_at else None,
+            "end_at": self.end_at if self.end_at else None,
+            "project_id": str(self.project_id),
+            "tasks": [task.to_dict() for task in self.tasks] if self.tasks else []
+            
+        }

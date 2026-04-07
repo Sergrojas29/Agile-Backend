@@ -25,3 +25,15 @@ class User(Base):
     
     #bidirectional Relationship to MANY Projects
     assigned_projects: Mapped[list["Project"]] = relationship(back_populates="owner")
+    
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "role": self.role,
+            "is_admin": self.is_admin,
+            "username": self.username,
+            "email": self.email,
+            #no password
+            "created_at": self.created_at.isoformat() if self.created_at else None
+        }

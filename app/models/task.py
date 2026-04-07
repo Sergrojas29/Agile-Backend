@@ -25,3 +25,16 @@ class Task(Base):
     #create Sprint Relationship to ONE sprint
     sprint_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("sprints.id"))
     assigned_sprint: Mapped["Sprint"] = relationship(back_populates="tasks")
+    
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "title": self.title,
+            "description": self.description,
+            "start_at": self.start_at if self.start_at else None,
+            "due_at": self.due_at if self.due_at else None,
+            "value": self.value,
+            
+            "user_id": str(self.user_id) if self.user_id else None,
+            "sprint_id": str(self.sprint_id) if self.sprint_id else None
+        }

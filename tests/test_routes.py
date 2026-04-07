@@ -7,19 +7,11 @@ from app.models.project import Project
 # class TestProjectRoutes(unittest.TestCase):
 #     pass
 
-<<<<<<< HEAD
-    def setUp(self):
-        self.app = create_app('testing')
-        self.app.config["TESTING"] = True
-        self.client = self.app.test_client()
-        self.db = SessionLocal()  
-=======
 #     def setUp(self):
 #         self.app = create_app('testing')
 #         self.app.config["TESTING"] = True
 #         self.client = self.app.test_client()
 #         self.db = SessionLocal()  # add this
->>>>>>> 77c75385bb5c315e097b06a144c196059a914fa3
 
 #     def tearDown(self):
 #         self.db.close()

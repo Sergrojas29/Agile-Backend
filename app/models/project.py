@@ -32,3 +32,21 @@ class Project(Base):
                                                             cascade="all, delete-orphan"
                                                             )
     
+    
+    
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "title": self.title,
+            "description": self.description,
+            "start_at": self.start_at if self.start_at else None,
+            "end_at": self.end_at if self.end_at else None,
+            "owner_id": str(self.owner_id) if self.owner_id else None,
+            
+
+            "sprints": [sprint.to_dict() for sprint in self.assigned_sprints] if self.assigned_sprints else []
+        }
+    
+    
+
+    
