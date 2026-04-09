@@ -47,7 +47,9 @@ def post_task():
             title = data["title"],
             description = data.get("description"),
             due_at = data["due_at"],
-            value = data["value"]
+            value = data["value"],
+            user_id = data["user_id"],
+            sprint_id = data["sprint_id"]
         )
         db.add(task)
         db.commit()

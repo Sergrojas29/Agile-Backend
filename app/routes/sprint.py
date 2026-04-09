@@ -49,7 +49,8 @@ def post_sprint():
 
         sprint = Sprint(
             title = data["title"],
-            end_at = data["end_at"]
+            end_at = data["end_at"],
+            project_id = data["project_id"]
         )
         db.add(sprint)
         db.commit

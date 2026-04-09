@@ -17,6 +17,7 @@ class Task(Base):
     start_at: Mapped[Date] = mapped_column(Date, nullable= False, server_default=func.now())
     due_at: Mapped[Date] = mapped_column(Date, nullable= False)
     value: Mapped[int] = mapped_column(Integer, nullable=False)
+    complete: Mapped[bool] = mapped_column(Boolean, default=False)
     
     #create Relationship to ONE user
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
