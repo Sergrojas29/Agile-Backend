@@ -50,7 +50,6 @@ def post_task():
             value = data["value"],
             user_id = data["user_id"],
             sprint_id = data["sprint_id"],
-            complete= data["complete"]
         )
         db.add(task)
         db.commit()
@@ -76,6 +75,7 @@ def update_task(task_id):
         task.description = data.get("description",task.description)
         task.due_at = data.get("due_at",task.due_at)
         task.value = data.get("value",task.value)
+        task.complete = data.get("complete", task.complete)
 
         db.commit()
         db.refresh(task)
