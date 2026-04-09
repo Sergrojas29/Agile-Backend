@@ -39,7 +39,7 @@ def get_sprint(sprint_id):
         db.close()
 
 #post a sprint 
-@sprint_bp.route("/sprints",methods=["POST"])
+@sprint_bp.route("/sprints", methods=["POST"])
 def post_sprint():
     db = SessionLocal()
     # this on has two system produced variables, end at is the only two 
@@ -50,11 +50,15 @@ def post_sprint():
         sprint = Sprint(
             title = data["title"],
             end_at = data["end_at"],
-            project_id = data["project_id"]
+            project_id = data["project_id"],
         )
         db.add(sprint)
-        db.commit
+        db.commit()
         db.refresh(sprint)
+        return jsonify({
+            "message": "Sprint created successfully", 
+            "sprint_id": sprint.id
+        }), 201
     finally: 
         db.close()
 
